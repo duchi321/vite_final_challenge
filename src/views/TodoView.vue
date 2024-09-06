@@ -166,7 +166,7 @@ const deleteTodos = async (id) => {
       <h1><a href="#">ONLINE TODO LIST</a></h1>
       <ul>
         <li class="todo_sm">
-          <a href="#" style="pointer-events: none"
+          <a
             ><span>Hello There {{ signinStatus.nickname }}!</span></a
           >
           <RouterLink to="" @click="signOut">登出</RouterLink>
