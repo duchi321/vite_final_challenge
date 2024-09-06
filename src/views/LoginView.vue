@@ -25,16 +25,17 @@ const signIn = async () => {
   try {
     const res = await axios.post(`${api}/users/sign_in`, signinData.value)
     signinStatus.value = res.data.status
-    document.cookie = `cookiesSaveToken=${res.data.token}; expires=${res.data.exp}; path=/`
-    location.reload()
+    document.cookie = `cookiesSaveToken=${res.data.token}`
     alert('登入')
+    setTimeout(() => {
+      router.push('/todo')
+    }, 500)
   } catch (err) {
     alert('帳號或密碼錯誤!')
   }
 }
 
-//驗證----------------------
-
+// 驗證
 onMounted(async () => {
   const token = document.cookie.replace(
     /(?:(?:^|.*;\s*)cookiesSaveToken\s*=\s*([^;]*).*$)|^.*$/,
@@ -49,12 +50,12 @@ onMounted(async () => {
       }
     })
     signinStatus.value = res.data
-    router.push({ path: '/todolist' })
   } catch (error) {
     console.log('未登入')
   }
 })
 </script>
+
 <template>
   <!-- login_page -->
   <div id="loginPage" class="bg-yellow">
@@ -77,6 +78,7 @@ onMounted(async () => {
           <h2 class="formControls_txt">最實用的線上代辦事項服務</h2>
           <label class="formControls_label" for="email">Email</label>
           <input
+            autocomplete="username"
             class="formControls_input"
             type="text"
             id="email"
@@ -88,6 +90,7 @@ onMounted(async () => {
           <span v-if="!signinData.email">此欄位不可留空</span>
           <label class="formControls_label" for="pwd">密碼</label>
           <input
+            autocomplete="current-password"
             class="formControls_input"
             type="password"
             name="pwd"
